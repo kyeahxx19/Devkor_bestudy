@@ -21,24 +21,4 @@ export class AppController {
       res.status(400).send(error.message);
     }
   }
-
-  @Post('/:name')
-  postUsername(@Param('name') name: string, @Res() res: Response){
-    try{
-      const index = this.appService.postUsername(name);
-      res.status(200).send(index);
-    } catch(error){
-      res.status(500).send(error.message);
-    }
-  }
-
-  @Delete("/:index")
-  deleteUserByIndex(@Param('index') index: number, @Res() res: Response){
-    try{
-      const username = this.appService.deleteUserByIndex(index);
-      res.status(200).send(username);
-    } catch(error){
-      res.status(400).send(error.message);
-    }
-  }
 }
