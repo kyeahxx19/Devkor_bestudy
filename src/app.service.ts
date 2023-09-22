@@ -19,12 +19,8 @@ export class AppService {
   }
 
   postUsername(name: string){
-    try{
-      this.usernames.push(name);
-      return this.usernames.length - 1;
-    } catch(error){
-      return error;
-    }
+    this.usernames.push(name);
+    return this.usernames.length - 1;
   }
 
   deleteUserByIndex(index: number){
