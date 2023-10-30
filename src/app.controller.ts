@@ -1,14 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Delete,
-  Param,
-  Res,
-  Body,
-} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Response } from 'express';
 
 @Controller('/users')
 export class AppController {
@@ -17,36 +8,5 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
-  }
-
-  // parameter query
-  @Get('/:index')
-  getUsernameByIndex(@Param('index') index: number, @Res() res: Response) {
-    try {
-      const username = this.appService.getUsernameByIndex(index);
-      res.send(username);
-    } catch (error) {
-      res.status(404).send(error.message);
-    }
-  }
-
-  @Post()
-  postUsername(@Body('name') name: string, @Res() res: Response) {
-    try {
-      const index = this.appService.postUsername(name);
-      res.status(200).send(index);
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  }
-
-  @Delete()
-  deleteUserByIndex(@Body('index') index: number, @Res() res: Response) {
-    try {
-      const username = this.appService.deleteUserByIndex(index);
-      res.status(200).send('delete ' + username);
-    } catch (error) {
-      res.status(400).send(error.message);
-    }
   }
 }
