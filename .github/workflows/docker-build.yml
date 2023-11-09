@@ -11,6 +11,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
