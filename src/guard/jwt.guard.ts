@@ -20,15 +20,10 @@ export class JwtGuard implements CanActivate {
       return false;
     }
     try {
-      const payload: JwtPayload = this.jwtService.decode(
-        token.replace('Bearer ', ''),
-      );
-      if (this.userService.findById(payload.id)) {
-        request.user = payload;
-        return true;
-      } else {
-        return false;
-      }
+      const decodedToken = token.replace('Bearer ', '');
+      const payload: JwtPayload = this.jwtService.decode(decodedToken);
+      request.user = payload;
+      return true;
     } catch (error) {
       console.log(error);
       return false;

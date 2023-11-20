@@ -49,9 +49,9 @@ export class UserService {
     });
 
     if (
-      (await !bcrypt.compare(password, user.password)) ||
       !user ||
-      user == undefined
+      user == undefined ||
+      (await !bcrypt.compare(password, user.password))
     ) {
       throw new UnauthorizedException();
     }
