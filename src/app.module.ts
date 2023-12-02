@@ -5,8 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { SwaggerModule } from '@nestjs/swagger';
-import { PostService } from './post/post.service';
-import { PostController } from './post/post.controller';
 import { PostModule } from './post/post.module';
 
 @Module({
@@ -26,7 +24,7 @@ import { PostModule } from './post/post.module';
     SwaggerModule,
     PostModule,
   ],
-  controllers: [AppController, PostController],
-  providers: [AppService, PostService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

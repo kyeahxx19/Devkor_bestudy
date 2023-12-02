@@ -14,5 +14,6 @@ import { Users } from 'src/entities';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService, JwtModule],
 })
 export class UserModule {}
