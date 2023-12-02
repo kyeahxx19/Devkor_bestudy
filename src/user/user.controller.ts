@@ -12,12 +12,17 @@ import { UserService } from './user.service';
 import { LoginDto, SignupDto } from 'src/entities/dtos/user.dto';
 import { JwtGuard } from 'src/guard/jwt.guard';
 import { JwtPayload } from 'src/interfaces/jwt.payload';
+import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { BasicApiResponse } from 'src/decorators/api.decorator';
 
 @Controller('user')
+@ApiTags('user')
+@BasicApiResponse()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/signup')
+  @ApiBody({ description: 'signup 정보', type: SignupDto })
   async signup(@Body() signupUser: SignupDto, @Res() res: Response) {
     try {
       await this.userService.signupUser(signupUser);
@@ -29,6 +34,11 @@ export class UserController {
   }
 
   @Post('/login')
+  @ApiBody({ description: 'login 정보', type: LoginDto })
+  @ApiResponse({
+    description: '성공시 토큰 반환',
+    schema: { properties: { token: { type: 'string' } } },
+  })
   async login(@Body() loginUser: LoginDto, @Res() res: Response) {
     try {
       const token = await this.userService.loginUser(loginUser);
@@ -40,6 +50,17 @@ export class UserController {
   }
 
   @UseGuards(JwtGuard)
+  @ApiHeader({
+    description: 'access token',
+    name: 'Authorization',
+    example: 'Bearer $token',
+  })
+  @ApiResponse({
+    description: 'user info',
+    schema: {
+      properties: { name: { type: 'string' }, email: { type: 'string' } },
+    },
+  })
   @Get('/info')
   async userInfo(@Req() req: Request, @Res() res: Response) {
     const { id } = req.user as JwtPayload;
